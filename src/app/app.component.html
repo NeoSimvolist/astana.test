@@ -1,20 +1,85 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Тестовое задание</a>
+</nav>
 
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a (click)="temperatureClick()"
+                           [ngClass]="{active: current === 'temperature'}"
+                           class="nav-link active" href="#">
+                            <span data-feather="home"></span>
+                            Температура
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a (click)="precipitationClick()"
+                           [ngClass]="{active: current === 'precipitation'}"
+                           class="nav-link" href="#">
+                            <span data-feather="file"></span>
+                            Осадки
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 *ngIf="!loading && current === 'temperature'" class="h2">Температура </h1>
+                <h1 *ngIf="!loading && current === 'precipitation'" class="h2">Осадки</h1>
+                <h1 *ngIf="loading" class="h2">Загрузка...</h1>
+            </div>
+
+            <form class="form-inline">
+                <div class="form-group mb-2">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">C</label>
+                        </div>
+                        <select [(ngModel)]="startYear"
+                                [ngModelOptions]="{standalone: true}"
+                                (change)="selectChange($event)"
+                                class="custom-select">
+                            <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mb-2 ml-1">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">По</label>
+                        </div>
+                        <select [(ngModel)]="endYear"
+                                [ngModelOptions]="{standalone: true}"
+                                (change)="selectChange($event)"
+                                class="custom-select">
+                            <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mb-2 ml-1">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Тип</label>
+                        </div>
+                        <select [(ngModel)]="groupType"
+                                [ngModelOptions]="{standalone: true}"
+                                (change)="selectChange($event)"
+                                class="custom-select">
+                            <option *ngFor="let type of groupTypes" [value]="type.value">{{type.display}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <div>
+                <canvas width="400" height="200" #chart></canvas>
+            </div>
+
+        </main>
+    </div>
+</div>
