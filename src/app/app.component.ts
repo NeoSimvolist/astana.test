@@ -69,11 +69,13 @@ export class AppComponent {
     temperatureClick() {
         this.current = 'temperature';
         this.updateChart();
+        return false;
     }
 
     precipitationClick() {
         this.current = 'precipitation';
         this.updateChart();
+        return false;
     }
 
     protected updateChart() {
