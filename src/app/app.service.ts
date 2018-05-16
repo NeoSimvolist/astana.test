@@ -32,8 +32,8 @@ export class Temperature extends Precipitation {
 @Injectable()
 export class AppService {
 
-    public static readonly chunkSize = 1000;
-    public static readonly chunkTime = 50;
+    public static readonly chunkSize = 800;
+    public static readonly chunkTime = 0;
 
     constructor(private http: HttpClient) {
     }
